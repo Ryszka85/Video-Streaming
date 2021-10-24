@@ -10,6 +10,6 @@ export class TestingService {
   constructor(private httpClient: HttpClient) { }
 
   public test(): Observable<any> {
-    return this.httpClient.get('https://77.116.152.165:8080/test');
+    return this.httpClient.get('https://77.116.152.165:8443/test');
   }
 }
