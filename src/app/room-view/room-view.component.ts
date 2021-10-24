@@ -157,7 +157,7 @@ export class RoomViewComponent implements AfterViewInit{
   }
 
   private async requestMediaDevices(): Promise<void> {
-    console.log('Bumsti is in the fucking house');
+    console.log('Bumsti is in the fucking house!! Yo Yo');
     try {
       navigator.mediaDevices.getUserMedia(constraints)
         .then(
