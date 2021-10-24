@@ -16,7 +16,7 @@ export class AppComponent {
   title = 'Video-Streaming';
   
   constructor(private http: HttpClient) {
-    this.http.get(environment.endpointPrefix + 'test')
+    this.http.get('77.116.152.165:8080/test')
       .subscribe(response => console.log(response));
   }
 
