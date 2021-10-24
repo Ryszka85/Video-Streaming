@@ -43,9 +43,9 @@ export class RoomViewComponent implements AfterViewInit{
     this.createPeerConnection();
 
     // Add the tracks from the local stream to the RTCPeerConnection
-    // this.localStream.getTracks().forEach(
-    //   track => this.peerConnection.addTrack(track, this.localStream)
-    // );
+    this.localStream.getTracks().forEach(
+      track => this.peerConnection.addTrack(track, this.localStream)
+    );
 
     try {
       const offer: RTCSessionDescriptionInit = await this.peerConnection.createOffer(offerOptions);
