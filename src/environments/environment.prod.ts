@@ -1,4 +1,5 @@
 export const environment = {
+  endpointPrefix: '77.116.152.165:8080/',
   wsEndpoint: 'wss://77.116.152.165:8080/socket',  
   RTCPeerConfiguration: {
     iceServers: [

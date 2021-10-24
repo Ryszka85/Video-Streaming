@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  endpointPrefix: '77.116.152.165:8080/',
   wsEndpoint: 'ws://localhost:8080/socket',  
   RTCPeerConfiguration: {
     iceServers: [
