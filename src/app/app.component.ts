@@ -18,10 +18,10 @@ export class AppComponent {
   
   constructor(private http: HttpClient, private s: TestingService) {
     console.log('Stinkendes Gesindel!! sers'); 
-    // this.s.test().subscribe(resp => {
-    //   this.element = resp;
-    //   console.log(resp);
-    // })
+    this.s.test().subscribe(resp => {
+      this.element = resp;
+      console.log(resp);
+    })
   }
 
 
