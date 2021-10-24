@@ -16,6 +16,7 @@ export class AppComponent {
   title = 'Video-Streaming';
   
   constructor(private http: HttpClient) {
+    console.log('Stinkendes Gesindel!!');
     this.http.get('77.116.152.165:8080/test')
       .subscribe(response => console.log(response));
   }
