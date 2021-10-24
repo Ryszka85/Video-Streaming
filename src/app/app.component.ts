@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { TestingService } from './testing.service';
 
 
 
@@ -12,13 +13,15 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
+  element: any;
   title = 'Video-Streaming';
   
-  constructor(private http: HttpClient) {
-    console.log('Stinkendes Gesindel!!');
-    this.http.get('77.116.152.165:8080/test')
-      .subscribe(response => console.log(response));
+  constructor(private http: HttpClient, private s: TestingService) {
+    console.log('Stinkendes Gesindel!!'); 
+    this.s.test().subscribe(resp => {
+      this.element = resp;
+      console.log(resp);
+    })
   }
 
 
