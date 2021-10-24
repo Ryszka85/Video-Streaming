@@ -158,8 +158,14 @@ export class RoomViewComponent implements AfterViewInit{
 
   private async requestMediaDevices(): Promise<void> {
     try {
-      this.localStream = await navigator.mediaDevices.getUserMedia(constraints);
-      this.localVideo.nativeElement.srcObject = this.localStream;
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(
+          stream => { 
+            this.localStream = stream ;
+            this.localVideo.nativeElement.srcObject = this.localStream;
+          }
+        );
+      
       // pause all tracks
       // this.pauseLocalVideo();
     } catch (e) {
