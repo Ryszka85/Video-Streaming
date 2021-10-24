@@ -286,6 +286,7 @@ export class RoomViewComponent implements AfterViewInit{
 
   private handleTrackEvent = (event: RTCTrackEvent) => {
     console.log(event);
+    console.log('Yugo event....')
     event.streams.forEach(event => console.log(event))
     this.remoteVideo.nativeElement.srcObject = event.streams[0];
   }
