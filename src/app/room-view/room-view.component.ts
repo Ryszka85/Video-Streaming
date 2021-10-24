@@ -39,7 +39,7 @@ export class RoomViewComponent implements AfterViewInit{
   constructor(private dataService: DataService) { }
 
   async call(): Promise<void> {
-    console.log('Sers')
+    console.log('Sers Tracks')
     this.createPeerConnection();
 
     // Add the tracks from the local stream to the RTCPeerConnection
