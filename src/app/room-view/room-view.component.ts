@@ -44,7 +44,10 @@ export class RoomViewComponent implements AfterViewInit{
 
     // Add the tracks from the local stream to the RTCPeerConnection
     this.localStream.getTracks().forEach(
-      track => this.peerConnection.addTrack(track, this.localStream)
+      track => {
+        console.log(track);
+        this.peerConnection.addTrack(track, this.localStream);
+      }
     );
 
     try {
