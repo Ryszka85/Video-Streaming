@@ -3,6 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  wsEndpoint: 'ws://localhost:8080/socket',  
+  RTCPeerConfiguration: {
+    iceServers: [
+      {
+        urls: 'stun:stun1.l.google.com:19302'
+      }
+    ]
+  },
   production: false
 };
 
