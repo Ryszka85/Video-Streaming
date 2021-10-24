@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'Video-Streaming';
   
   constructor(private http: HttpClient, private s: TestingService) {
-    console.log('Stinkendes Gesindel!!'); 
+    console.log('Stinkendes Gesindel!! Furz'); 
     this.s.test().subscribe(resp => {
       this.element = resp;
       console.log(resp);
