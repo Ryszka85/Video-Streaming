@@ -1,6 +1,6 @@
 export const environment = {
-  endpointPrefix: 'http://77.116.152.165:8080/',
-  wsEndpoint: 'wss://77.116.152.165:8443/socket',  
+  endpointPrefix: 'https://ryszka.herokuapp.com/',
+  wsEndpoint: 'wss://ryszka.herokuapp.com/socket',  
   RTCPeerConfiguration: {
     iceServers: [
       {
