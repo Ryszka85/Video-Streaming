@@ -29,9 +29,7 @@ const offerOptions = {
 export class RoomViewComponent implements AfterViewInit{
   @ViewChild('local_video') localVideo: ElementRef;
   @ViewChild('received_video') remoteVideo: ElementRef;
-  @ViewChild('v1') v1: ElementRef;
-  @ViewChild('v2') v2: ElementRef;
-  @ViewChild('container') container: ElementRef;
+  
   private localStream: MediaStream;
   private peerConnection: RTCPeerConnection;
   inCall = false;
@@ -242,16 +240,16 @@ export class RoomViewComponent implements AfterViewInit{
     // this.peerConnection.ontrack = this.handleTrack;  
   }
 
-  private createPeer(): RTCPeerConnection {
-    console.log('Creating peer connection...');
-    let peerConnection = new RTCPeerConnection(ENV_RTCPeerConfiguration);
-    peerConnection.onicecandidate = this.handleICECandidateEvent;
-    peerConnection.oniceconnectionstatechange = this.handleICEConnectionStateChangeEvent;
-    peerConnection.onsignalingstatechange = this.handleSignalingStateChangeEvent;
-    peerConnection.ontrack = this.handleTrack;
+  // private createPeer(): RTCPeerConnection {
+  //   console.log('Creating peer connection...');
+  //   let peerConnection = new RTCPeerConnection(ENV_RTCPeerConfiguration);
+  //   peerConnection.onicecandidate = this.handleICECandidateEvent;
+  //   peerConnection.oniceconnectionstatechange = this.handleICEConnectionStateChangeEvent;
+  //   peerConnection.onsignalingstatechange = this.handleSignalingStateChangeEvent;
+  //   peerConnection.ontrack = this.handleTrack;
     
-    return peerConnection;
-  }
+  //   return peerConnection;
+  // }
 
   private closeVideoCall(): void {
     console.log('Closing call');
@@ -333,32 +331,32 @@ export class RoomViewComponent implements AfterViewInit{
   }
 
 
-  private newTrackHandler = (event: RTCTrackEvent) => { 
-    if(this.connectionsList.length === 1) {
-      this.v1.nativeElement.srcObject = event.streams[0];
-    } else {
-      this.v2.nativeElement.srcObject = event.streams[0];
-    }
-  }
+  // private newTrackHandler = (event: RTCTrackEvent) => { 
+  //   if(this.connectionsList.length === 1) {
+  //     this.v1.nativeElement.srcObject = event.streams[0];
+  //   } else {
+  //     this.v2.nativeElement.srcObject = event.streams[0];
+  //   }
+  // }
 
-  private handleTrack = (event: RTCTrackEvent) => {
+  // private handleTrack = (event: RTCTrackEvent) => {
     
-    // let el = this.renderer.createElement('video');
-    // console.log(el);
-    // el.srcObj = event.streams[0];
-    // el.autoPlay = true;
-    // this.elList.push(el);    
-    // this.renderer.appendChild(this.container.nativeElement, el);
+  //   // let el = this.renderer.createElement('video');
+  //   // console.log(el);
+  //   // el.srcObj = event.streams[0];
+  //   // el.autoPlay = true;
+  //   // this.elList.push(el);    
+  //   // this.renderer.appendChild(this.container.nativeElement, el);
  
 
-    if(this.peerConnections.length === 1) {
-      console.log('setting v1')
-      this.v1.nativeElement.srcObject = event.streams[0];
-    } else {
-      console.log('setting v2')
-      this.v2.nativeElement.srcObject = event.streams[0];
-    }
-  }
+  //   if(this.peerConnections.length === 1) {
+  //     console.log('setting v1')
+  //     this.v1.nativeElement.srcObject = event.streams[0];
+  //   } else {
+  //     console.log('setting v2')
+  //     this.v2.nativeElement.srcObject = event.streams[0];
+  //   }
+  // }
 
   private handleTrackEvent = (event: RTCTrackEvent) => {
     console.log(event);
