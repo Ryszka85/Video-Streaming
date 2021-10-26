@@ -1,0 +1,17 @@
+<mat-toolbar>     
+    <mat-toolbar-row>
+      <span class="font">Video call</span>
+      <span class="example-spacer"></span>
+      <button (click)="call()" mat-icon-button>
+        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon">video_call</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="room-body">
+    <div class="video-container">
+        <video width="500px" height="281px" class="video-player" #local_video [autoplay]="true" [muted]="true"></video>
+        <video width="500px" height="281px" class="video-player" #received_video [autoplay]="true" [muted]="true"></video>
+      </div>
+  </div>
+  
