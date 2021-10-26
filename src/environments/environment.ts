@@ -3,8 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  endpointPrefix: 'https://ryszka.herokuapp.com/',
-  wsEndpoint: 'wss://ryszka.herokuapp.com/socket',  
+  // endpointPrefix: 'https://ryszka.herokuapp.com/',
+  // wsEndpoint: 'wss://ryszka.herokuapp.com/socket',  
+  endpointPrefix: 'http://localhost:8080/',
+  wsEndpoint: 'ws://localhost:8080/socket',  
   RTCPeerConfiguration: {
     iceServers: [
       {

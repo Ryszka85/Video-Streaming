@@ -17,7 +17,7 @@ export class DataService {
 
   constructor() { }
 
-  private socket$: WebSocketSubject<any>;
+  private socket$: WebSocketSubject<Message>;
 
   private messagesSubject = new Subject<any>();
   public messages$ = this.messagesSubject.asObservable();
@@ -34,7 +34,7 @@ export class DataService {
       this.socket$.subscribe(
         // Called whenever there is a message from the server
         msg => {
-          console.log('Received message of type: ' + msg.type);
+          console.log('Received message of type: ' + msg);
           this.messagesSubject.next(msg);
         }
       );

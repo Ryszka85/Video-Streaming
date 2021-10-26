@@ -1,3 +1,9 @@
 <video #local_video [autoplay]="true" [muted]="true"></video>
+
+<div #container>
+    <video #v1 [autoplay]="true" [muted]="true"></video>
+    <video #v2 [autoplay]="true" [muted]="true"></video>
+</div>
+
 <video #received_video [autoplay]="true" [muted]="true"></video>
-<button (click)="call()">Call</button>
+<button (click)="testCall()">Call</button>
