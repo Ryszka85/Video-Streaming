@@ -8,6 +8,7 @@ export const WS_ENDPOINT = environment.wsEndpoint;
 export interface Message {
   type: string;
   data: any;
+  address?: string;
 }
 
 @Injectable({
