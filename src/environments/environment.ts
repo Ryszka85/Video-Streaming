@@ -5,8 +5,8 @@
 export const environment = {
   // endpointPrefix: 'https://ryszka.herokuapp.com/',
   // wsEndpoint: 'wss://ryszka.herokuapp.com/socket',  
-  endpointPrefix: 'http://localhost:8080/',
-  wsEndpoint: 'ws://localhost:8080/socket',  
+  endpointPrefix: 'https://ryszka.herokuapp.com/',
+  wsEndpoint: 'wss://ryszka.herokuapp.com/socket', 
   RTCPeerConfiguration: {
     iceServers: [
       {
