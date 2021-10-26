@@ -50,72 +50,8 @@ export class RoomViewComponent implements AfterViewInit{
   
   
   constructor(private dataService: DataService, private renderer: Renderer2) { }
-
-
-  async newTestCall(): Promise<void> { 
-    this.connectionsList.forEach(async connection => {
-      console.log('Processing connection : ' + connection.clientId);
-      
-      this.localStream.getTracks().forEach(
-        track => {
-          console.log(connection.peer.getSenders());                   
-          connection.peer.addTrack(track, this.localStream);                                      
-        }        
-      );
-      try {
-        
-        const offer: RTCSessionDescriptionInit = await connection.peer.createOffer(offerOptions);
-        // Establish the offer as the local peer's current description.
-        await connection.peer.setLocalDescription(offer);
-        console.log(offer);      
-        this.inCall = true;
-  
-        this.dataService.sendMessage({type: 'offer', data: offer, address: connection.clientId});
-      } catch (err) {
-        this.handleGetUserMediaError(err);
-      }
-    })
-  } 
    
-  async testCall(): Promise<void> {
-    
-    console.log('Peer connections size : ' + this.peerConnections.length);
-    console.log('Localstream tracks length ..: ' + this.localStream.getTracks().length)
-    this.peerConnections.forEach(async peer => {     
-
-      this.localStream.getTracks().forEach(
-        track => {
-          console.log(peer.getSenders());                   
-          peer.addTrack(track, this.localStream);        
-
-          console.log(peer);
-          console.log(peer.getSenders());          
-          
-        }
-      );
-      
-     
-      
   
-      try {
-        
-        const offer: RTCSessionDescriptionInit = await peer.createOffer(offerOptions);
-        // Establish the offer as the local peer's current description.
-        await peer.setLocalDescription(offer);
-        console.log(offer);
-        console.log('Before sending offer message ...');
-  
-        this.inCall = true;
-  
-        this.dataService.sendMessage({type: 'offer', data: offer});
-      } catch (err) {
-        this.handleGetUserMediaError(err);
-      }    
-    })    
-
-    
-
-  }
 
   async call(): Promise<void> {
     console.log('Sers Tracks')
@@ -162,11 +98,6 @@ export class RoomViewComponent implements AfterViewInit{
         console.log('Received message: ' + msg.type);
         switch (msg.type) {
           case 'Connected':
-            let peer = this.createPeer();
-            this.connectionsList.push( { clientId: msg.data, peer: peer } )
-            this.connectionsList.forEach(con => console.log(con))
-            this.peerConnections.push(peer);
-            console.log(msg.data);
             break;
           case 'offer':
             this.handleOfferMessage(msg.data);
@@ -191,78 +122,14 @@ export class RoomViewComponent implements AfterViewInit{
     );
   }
 
-  private handleConnectedUser() {
-    this.createPeer()
-  }
+
 
   /* ########################  MESSAGE HANDLER  ################################## */
 
-  private inconmingOffer(msg: RTCSessionDescriptionInit): void {
-    this.connectionsList
-        .forEach(connection => {
-          connection.peer
-            .setRemoteDescription(new RTCSessionDescription(msg))
-            .then(() => {
-              console.log('handle incoming offer');    
-              console.log(connection.peer);
-              this.localStream.getTracks().forEach(
-                track => {
-                  connection.peer.addTrack(track, this.localStream);            
-                }
-              );
-              return connection.peer.createAnswer();
-            }).then((answer) => {
-              console.log(answer);    
-              return connection.peer.setLocalDescription(answer);    ;    
-            }).then(() => {
-              console.log('Starting to send answer ..')
-              console.log( connection.peer.localDescription)
-              this.dataService.sendMessage({type: 'answer', data: connection.peer.localDescription, address: connection.clientId});
-              this.inCall = true; 
-            }).catch(this.handleGetUserMediaError); 
-        })
-  }
+ 
 
-  private offer(msg: RTCSessionDescriptionInit): void {   
-    console.log('size : ' + this.peerConnections.length);
-    console.log('offer message : ' + msg.sdp)
-    this.peerConnections.forEach(peerConnection => {
-      console.log(peerConnection)
-      peerConnection.setRemoteDescription(new RTCSessionDescription(msg))
-      .then(() => {
-        console.log('handle incoming offer');    
-        console.log(peerConnection);
-        this.localStream.getTracks().forEach(
-          track => {
-            peerConnection.addTrack(track, this.localStream);            
-          }
-        );
-      }).then(() => {
-      return peerConnection.createAnswer();
-    }).then((answer) => {
-      console.log(answer);    
-      return peerConnection.setLocalDescription(answer);    ;    
-    }).then(() => {
-      console.log('Starting to send answer ..')
-      console.log( peerConnection.localDescription)
-      this.dataService.sendMessage({type: 'answer', data: peerConnection.localDescription});
-      this.inCall = true; 
-    }).catch(this.handleGetUserMediaError);    
-    })
-    
-  }
+  
 
-  private checkIfAddTrack(track: MediaStreamTrack, peerConnection: RTCPeerConnection): void {
-    console.log(peerConnection.getSenders());
-    peerConnection.getSenders().forEach(sender => {
-      console.log(sender.track.id );
-      console.log(track.id);
-      if (sender.track.id !== track.id) {
-        console.log('Sender is not null');
-        peerConnection.addTrack(track, this.localStream);
-      } 
-    }) 
-  }
 
 
 
@@ -309,23 +176,6 @@ export class RoomViewComponent implements AfterViewInit{
   }
 
 
-  private incomingAnswer(msg: RTCSessionDescriptionInit): void { 
-    this.connectionsList.forEach(connection => {
-      if(connection.peer && msg) {
-        connection.peer.setRemoteDescription(msg)
-      }
-    })
-  }
-
-  private answer(msg: RTCSessionDescriptionInit): void {
-    console.log(this.peerConnections.length);
-    this.peerConnections.forEach(peerConnection => {
-      if(peerConnection && msg) {
-        peerConnection.setRemoteDescription(msg)
-      }
-    });
-  }
-
   private handleAnswerMessage(msg: RTCSessionDescriptionInit): void {
     console.log('handle incoming answer');
     this.peerConnection.setRemoteDescription(msg);
@@ -336,26 +186,6 @@ export class RoomViewComponent implements AfterViewInit{
     this.closeVideoCall();
   }
 
-  private incomingIce(msg: RTCIceCandidate): void {   
-    this.connectionsList.forEach(conneciton => {
-      const candidate = new RTCIceCandidate(msg);
-      if(candidate && conneciton.peer) {
-        conneciton.peer.addIceCandidate(candidate);
-      }
-    })
-  }
-
-  private ice(msg: RTCIceCandidate): void {    
-    this.peerConnections.forEach(peerConnection => {  
-      console.log('running ice ..' + msg)    
-      const candidate = new RTCIceCandidate(msg);
-      console.log('running ice ..' + candidate)    
-      if(candidate && peerConnection) {
-        peerConnection.addIceCandidate(candidate).catch(this.reportError); 
-      }
-      
-    });
-  }
 
   private handleICECandidateMessage(msg: RTCIceCandidate): void {
     const candidate = new RTCIceCandidate(msg);
@@ -484,22 +314,22 @@ export class RoomViewComponent implements AfterViewInit{
 
   private handleICEConnectionStateChangeEvent = (event: Event) => {
     console.log(event);
-    // switch (this.peerConnection.iceConnectionState) {
-    //   case 'closed':
-    //   case 'failed':
-    //   case 'disconnected':
-    //     this.closeVideoCall();
-    //     break;
-    // }
+    switch (this.peerConnection.iceConnectionState) {
+      case 'closed':
+      case 'failed':
+      case 'disconnected':
+        this.closeVideoCall();
+        break;
+    }
   }
 
   private handleSignalingStateChangeEvent = (event: Event) => {
     console.log(event);
-    // switch (this.peerConnection.signalingState) {
-    //   case 'closed':
-    //     this.closeVideoCall();
-    //     break;
-    // }
+    switch (this.peerConnection.signalingState) {
+      case 'closed':
+        this.closeVideoCall();
+        break;
+    }
   }
 
 
