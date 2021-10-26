@@ -169,19 +169,19 @@ export class RoomViewComponent implements AfterViewInit{
             console.log(msg.data);
             break;
           case 'offer':
-            // this.handleOfferMessage(msg.data);
-            this.offer(msg.data);
+            this.handleOfferMessage(msg.data);
+            // this.offer(msg.data);
             break;
           case 'answer':
-            // this.handleAnswerMessage(msg.data);
-            this.answer(msg.data);
+            this.handleAnswerMessage(msg.data);
+            // this.answer(msg.data);
             break;
           case 'hangup':
             this.handleHangupMessage(msg);
             break;
           case 'ice-candidate':
-            // this.handleICECandidateMessage(msg.data);
-            this.ice(msg.data)
+            this.handleICECandidateMessage(msg.data);
+            // this.ice(msg.data)
             break;
           default:
             console.log('unknown message of type ' + msg.type);
