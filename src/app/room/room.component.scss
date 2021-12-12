@@ -21,11 +21,14 @@
 }
 
 .video-container {      
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 400px 400px;
+    // display: flex;
+    // flex-direction: row;
+    // align-items: flex-start;
+    // justify-content: center;
     gap: 30px;
+    
     height: 100%;
 }
 

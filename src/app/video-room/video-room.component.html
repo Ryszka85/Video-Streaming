@@ -1,0 +1,13 @@
+<p>video-room works!</p>
+
+
+<input [(ngModel)]="username" matInput placeholder="Placeholder">
+<button (click)="joinCall()" mat-button>Join</button>
+
+
+
+<div class="container" #container>
+    <video #video autoplay="true" muted="true"></video>
+</div>
+
+

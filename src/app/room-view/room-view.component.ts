@@ -56,12 +56,18 @@ export class RoomViewComponent implements AfterViewInit{
     this.createPeerConnection();
 
     // Add the tracks from the local stream to the RTCPeerConnection
-    this.localStream.getTracks().forEach(
-      track => {
-        console.log(track);
-        this.peerConnection.addTrack(track, this.localStream);
-      }
-    );
+    // this.localStream.getTracks().forEach(
+    //   track => {
+    //     console.log(track);
+    //     this.peerConnection.addTrack(track, this.localStream);
+    //   }
+    // );
+
+    this.localStream.getTracks()
+        .forEach(track => 
+          this.peerConnection.addTransceiver(track, { streams: [ this.localStream ] } )
+          // peerConnection.addTrack(track)
+        );
 
     try {
       const offer: RTCSessionDescriptionInit = await this.peerConnection.createOffer(offerOptions);
@@ -149,9 +155,17 @@ export class RoomViewComponent implements AfterViewInit{
         this.localVideo.nativeElement.srcObject = this.localStream;
 
         // add media tracks to remote connection
-        this.localStream.getTracks().forEach(
-          track => this.peerConnection.addTrack(track, this.localStream)
+        // this.localStream.getTracks().forEach(
+        //   track => this.peerConnection.addTrack(track, this.localStream)
+        // );
+
+        this.localStream.getTracks()
+        .forEach(track => 
+          this.peerConnection.addTransceiver(track, { streams: [ this.localStream ] } )
+          // peerConnection.addTrack(track)
         );
+
+        
 
       }).then(() => {
 
@@ -187,6 +201,7 @@ export class RoomViewComponent implements AfterViewInit{
 
   private handleICECandidateMessage(msg: RTCIceCandidate): void {
     const candidate = new RTCIceCandidate(msg);
+    
     this.peerConnection.addIceCandidate(candidate).catch(this.reportError);
   }
 

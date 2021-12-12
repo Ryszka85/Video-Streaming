@@ -10,12 +10,23 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import { RoomComponent } from './room/room.component';
 import {MatIconModule} from '@angular/material/icon';
+import { VideoRoomComponent } from './video-room/video-room.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { AnotherRoomComponent } from './another-room/another-room.component';
+import { SimplePeerComponent } from './simple-peer/simple-peer.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+// const config: SocketIoConfig = { url: 'http://localhost:8080/webSocket'};
 
 @NgModule({
   declarations: [
     AppComponent,
     RoomViewComponent,
-    RoomComponent
+    RoomComponent,
+    VideoRoomComponent,
+    AnotherRoomComponent,
+    SimplePeerComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +35,9 @@ import {MatIconModule} from '@angular/material/icon';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
